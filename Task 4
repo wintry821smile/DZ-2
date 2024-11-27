@@ -1,0 +1,39 @@
+def hex_to_rgb(hex_color):
+    # Убираем # и конвертируем
+    hex_color = hex_color.lstrip("#")
+    r = int(hex_color[:2], 16)
+    g = int(hex_color[2:4], 16)
+    b = int(hex_color[4:], 16)
+
+    # Вывод
+    print(f"HEX {hex_color} -> RGB ({r}, {g}, {b})")
+    return r, g, b
+
+def rgb_to_hex(rgb_color):
+    # Форматируем RGB обратно в HEX
+    hex_color = "#{:02x}{:02x}{:02x}".format(*rgb_color)
+    
+    # Как будто бы ненцжный вывод
+    print(f"RGB {rgb_color} -> HEX {hex_color}")
+    return hex_color
+
+def color_averager(*hex_colors):
+    # Переводим все цвета в RGB
+    rgb_colors = [hex_to_rgb(color) for color in hex_colors]
+    
+    # Вывод для каждого цвета
+    print("Все RGB цвета:", rgb_colors)
+
+    # Усредняем каналы
+    avg_rgb = tuple(round(sum(channel) / len(channel)) for channel in zip(*rgb_colors))
+    
+    # Еще одна проверка
+    if any(c < 0 or c > 255 for c in avg_rgb):
+        raise ValueError("Некорректное значение цвета")
+
+    # Конвертируем обратно в HEX
+    return rgb_to_hex(avg_rgb)
+
+# Примеры использования
+color_1, color_2 = "#3ca832", "#5032a8"
+print("Средний цвет:", color_averager(color_1, color_2))  # #467b7b
