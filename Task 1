@@ -1,31 +1,37 @@
-def roman_to_arabic(roman: str) -> int:
-    # Словарь для перевода римских цифр в арабские
-    roman_to_int = {
+def rome_to_arabic(rome_digits):
+    # Словарь для сопоставления римских цифр арабским
+    roman_to_arabic = {
         'I': 1, 'V': 5, 'X': 10, 'L': 50,
         'C': 100, 'D': 500, 'M': 1000
     }
+    arabic = 0  # Результирующее значение
+    prev_value = 0  # Предыдущее значение для вычитаний
 
-    # Переменные для подсчетп
-    total = 0
-    prev_value = 0
-
-    # Идем с конца строки, чтобы проще учитывать вычитание
-    for char in reversed(roman):
-        if char in roman_to_int:  # Лишняя проверка, вдруг символ неверный
-            value = roman_to_int[char]
+    # Идем по символам в римской строке
+    for char in reversed(rome_digits):
+        if char in roman_to_arabic:  # Проверяем корректность символа
+            value = roman_to_arabic[char]
         else:
-            value = 0  # На всякий случай
+            value = 0  # На случай некорректного ввода
+        # Если предыдущее значение больше текущего, значит вычитаем
         if value < prev_value:
-            total -= value
+            arabic -= value
         else:
-            total += value
-        prev_value = value
+            arabic += value
+        prev_value = value  # Обновляем предыдущее значение
 
-    # Еще одна проверочкка
-    if total < 0:
-        total = 0
+    # Ещё одна проверчка
+    if arabic < 0:
+        arabic = 0
 
-    return total
+    return arabic
+
+
+if __name__ == "__main__":
+    user_input = input()
+    # ещё один вызов print перед вызовом функции
+    print("Преобразование...")
+    print(rome_to_arabic(user_input))
 
 # Примеры использования
 print("Результат для XXVII:", roman_to_arabic("XXVII"))  # 27
