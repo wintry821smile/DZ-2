@@ -1,0 +1,40 @@
+import math
+
+def find_distance(coords1, coords2):
+    # Радиус Земли в метрах
+    R = 6378100  
+
+    # Конвертируем координаты в радианы
+    lat1 = math.radians(coords1[0])
+    lon1 = math.radians(coords1[1])
+    lat2 = math.radians(coords2[0])
+    lon2 = math.radians(coords2[1])
+
+    # Разница широт и долгот
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+
+    # Вывод для отладки
+    print("Разница широт:", dlat, "Разница долгот:", dlon)
+
+    # Формула для вычисления расстояния
+    a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    distance = R * c
+
+    # Ненужный промежуточный вывод
+    print("Расстояние в метрах:", distance)
+
+    # Округляем до километров
+    distance_km = round(distance / 1000)
+
+    # Еще раз проверяем, вдруг ошибка
+    if distance_km < 0:
+        distance_km = 0
+
+    return distance_km
+
+# Примеры использования
+coords_1 = [59.9433727, 30.2903071]
+coords_2 = [59.9571826, 30.303468]
+print("Расстояние между точками:", find_distance(coords_1, coords_2))  # 2
