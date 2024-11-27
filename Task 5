@@ -1,0 +1,15 @@
+def lcg(seed, a=1664525, c=1013904223, m=2**32):
+    # Вывод параметров
+    print(f"Инициализация LCG с параметрами: seed={seed}, a={a}, c={c}, m={m}")
+    while True:
+        seed = (a * seed + c) % m
+        result = seed % 101  # Генерируем числа от 0 до 100
+        print("Сгенерированное число:", result)  # Вывод каждого числа
+        yield result
+
+# Пример использования
+random_gen = lcg(seed=42)
+
+print("Первые 5 случайных чисел:")
+for _ in range(5):
+    print(next(random_gen))
