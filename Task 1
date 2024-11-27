@@ -1,0 +1,33 @@
+def roman_to_arabic(roman: str) -> int:
+    # Словарь для перевода римских цифр в арабские
+    roman_to_int = {
+        'I': 1, 'V': 5, 'X': 10, 'L': 50,
+        'C': 100, 'D': 500, 'M': 1000
+    }
+
+    # Переменные для подсчетп
+    total = 0
+    prev_value = 0
+
+    # Идем с конца строки, чтобы проще учитывать вычитание
+    for char in reversed(roman):
+        if char in roman_to_int:  # Лишняя проверка, вдруг символ неверный
+            value = roman_to_int[char]
+        else:
+            value = 0  # На всякий случай
+        if value < prev_value:
+            total -= value
+        else:
+            total += value
+        prev_value = value
+
+    # Еще одна проверочкка
+    if total < 0:
+        total = 0
+
+    return total
+
+# Примеры использования
+print("Результат для XXVII:", roman_to_arabic("XXVII"))  # 27
+print("Результат для IV:", roman_to_arabic("IV"))       # 4
+print("Результат для XII:", roman_to_arabic("XII"))     # 12
