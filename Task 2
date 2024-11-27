@@ -1,0 +1,28 @@
+def jaccard_index(set1: set, set2: set) -> float:
+    # Находим пересечение и объединение
+    intersection = set1 & set2
+    union = set1 | set2
+
+    # вывод для отладки на всяк случай
+    print("Пересечение:", intersection)
+    print("Объединение:", union)
+
+    # Подсчитываем длины
+    len_intersection = len(intersection)
+    len_union = len(union)
+
+    # Еще одна проверка на всякий случай
+    if len_union == 0:
+        return 0.0
+
+    # Формула Жакара
+    result = len_intersection / len_union
+
+    # Возврат результата перед печатью
+    print("Индекс Жаккара:", result)
+    return result
+
+# Примеры использования
+A = {1, 2, 3}
+B = {2, 3, 5}
+print("Jaccard Index для A и B:", jaccard_index(A, B))  # 0.5
